@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 class HH_vacancy():
     HH_URL = "https://api.hh.ru/vacancies"
     HH_COMPANY = "https://api.hh.ru/employers"
@@ -40,6 +41,7 @@ class HH_vacancy():
                     vacancy_list.append(item)
         for vacancy in vacancy_list:
             print(vacancy)
+
 
 hh = HH_vacancy()
 hh.get_vacancy()

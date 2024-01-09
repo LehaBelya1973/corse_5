@@ -12,22 +12,33 @@ class DBManager:
 
     def get_companies_and_vacancies_count(self):
         cur = self.conn.cursor()
-        cur.execute('''my sql request''')
+        cur.execute('''SELECT company_name, open_vacancies FROM employers''')
         return cur.fetchall
+
 
     def get_all_vacancies(self):
         cur = self.conn.cursor()
-        cur.execute('''my sql request''')
+        cur.execute('''
+            SELECT company_name, vacancy_name, salary_from, vacancy_url
+            FROM vacancies
+            JOIN employers USING (employer_id)
+            ORDER BY employers.company_name DESC            
+            ''')
         return cur.fetchall
 
     def get_avg_salary(self):
         cur = self.conn.cursor()
-        cur.execute('''my sql request''')
+        cur.execute('''
+            SELECT AVG(salary_from) AS avg_salary FROM vacancies
+            ''')
         return cur.fetchall
 
     def get_vacancies_with_higher_salary(self):
         cur = self.conn.cursor()
-        cur.execute('''my sql request''')
+        cur.execute('''
+            SELECT * FROM vacancies
+            WHERE salary_from > (SELECT AVG(salary_from) FROM vacancies)
+            ''')
         return cur.fetchall
 
     def get_vacancies_with_keyword(self, keyword, cur):

@@ -1,14 +1,18 @@
 from configparser import ConfigParser
 
+URL_HH_EMP = 'https://api.hh.ru/employers/'
+URL_HH_VAC = 'https://api.hh.ru/vacancies?employer_id='
 
-def config(filename='database.ini', section='postgresql'):
-    parser = ConfigParser
+
+def config(filename='src/database.ini', section='postgresql'):
+    # create a parser
+    parser = ConfigParser()
+    # read parser
     parser.read(filename)
     db = {}
     if parser.has_section(section):
         params = parser.items(section)
-        for param in params:
-            db[param[0]] = param[1]
+        db = dict(params)
     else:
-        raise Exception('Некорректно заполненный файл database.ini')
+        raise Exception("Некорректный файл database.ini")
     return db
